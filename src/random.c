@@ -31,7 +31,6 @@
 
 #include <errno.h>
 #include "c.h"
-#include "px.h"
 
 /* how many bytes to ask from system random provider */
 #define RND_BYTES  32
@@ -62,7 +61,7 @@ safe_read(int fd, void *buf, size_t count)
 		{
 			if (errno == EINTR)
 				continue;
-			return PXE_DEV_READ_ERROR;
+			return -10;
 		}
 		p += res;
 		done += res;
