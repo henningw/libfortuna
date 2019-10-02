@@ -30,6 +30,9 @@
  */
 
 #include <errno.h>
+#include <time.h>
+#include "random.h"
+#include "fortuna.h"
 #include "c.h"
 
 /* how many bytes to ask from system random provider */
@@ -45,8 +48,14 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-int
-safe_read(int fd, void *buf, size_t count)
+static time_t seed_time = 0;
+static time_t check_time = 0;
+
+static int get_random_bytes_int(uint8 *dst, unsigned count);
+
+/* private functions */
+
+static int safe_read(int fd, void *buf, size_t count)
 {
 	int			done = 0;
 	char	   *p = buf;
@@ -68,8 +77,7 @@ safe_read(int fd, void *buf, size_t count)
 	return done;
 }
 
-uint8 *
-try_dev_random(uint8 *dst)
+static uint8 * try_dev_random(uint8 *dst)
 {
 	int			fd;
 	int			res;
@@ -93,11 +101,71 @@ try_dev_random(uint8 *dst)
  *
  * dst should have room for 1024 bytes.
  */
-unsigned
-px_acquire_system_randomness(uint8 *dst)
+static unsigned acquire_system_randomness(uint8 *dst)
 {
 	uint8	   *p = dst;
 
 	p = try_dev_random(p);
 	return p - dst;
+}
+
+static void system_reseed(void)
+{
+        uint8           buf[1024];
+        int                     n;
+        time_t          t;
+        int                     skip = 1;
+
+        t = time(NULL);
+
+        if (seed_time == 0)
+                skip = 0;
+        else if ((t - seed_time) < SYSTEM_RESEED_MIN)
+                skip = 1;
+        else if ((t - seed_time) > SYSTEM_RESEED_MAX)
+                skip = 0;
+        else if (check_time == 0 ||
+                         (t - check_time) > SYSTEM_RESEED_CHECK_TIME)
+        {
+                check_time = t;
+
+                /* roll dice */
+                get_random_bytes_int(buf, 1);
+                skip = buf[0] >= SYSTEM_RESEED_CHANCE;
+        }
+        /* clear 1 byte */
+        memset(buf, 0, sizeof(buf));
+
+        if (skip)
+                return;
+
+        n = acquire_system_randomness(buf);
+        if (n > 0)
+                fortuna_add_entropy(buf, n);
+
+        seed_time = t;
+        memset(buf, 0, sizeof(buf));
+}
+
+static int get_random_bytes_int(uint8 *dst, unsigned count)
+{
+        system_reseed();
+        fortuna_get_bytes(count, dst);
+        return 0;
+}
+
+/* public functions */
+
+int get_pseudo_random_bytes(uint8 *dst, unsigned count)
+{
+        return get_random_bytes_int(dst, count);
+}
+
+
+
+int add_entropy(const uint8 *data, unsigned count)
+{
+        system_reseed();
+        fortuna_add_entropy(data, count);
+        return 0;
 }
