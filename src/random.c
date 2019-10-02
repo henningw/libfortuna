@@ -3,6 +3,7 @@
  *		Acquire randomness from system.  For seeding RNG.
  *
  * Copyright (c) 2001 Marko Kreen
+ * Copyright (c) 2019 Henning Westerholt
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
