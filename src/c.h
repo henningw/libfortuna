@@ -14,27 +14,6 @@
  *
  * src/include/c.h
  *
- *-------------------------------------------------------------------------
- */
-/*
- *----------------------------------------------------------------
- *	 TABLE OF CONTENTS
- *
- *		When adding stuff to this file, please try to put stuff
- *		into the relevant section, or add new sections as appropriate.
- *
- *	  section	description
- *	  -------	------------------------------------------------
- *		0)		pg_config.h and standard system headers
- *		1)		hacks to cope with non-ANSI C compilers
- *		2)		bool, true, false, TRUE, FALSE, NULL
- *		3)		standard system types
- *		4)		IsValid macros for system types
- *		5)		offsetof, lengthof, endof, alignment
- *		6)		widely useful macros
- *		7)		random stuff
- *		8)		system-specific hacks
- *
  * NOTE: since this file is included by both frontend and backend modules, it's
  * almost certainly wrong to put an "extern" declaration here.	typedefs and
  * macros are the kind of thing that might go here.
