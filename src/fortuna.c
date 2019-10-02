@@ -317,7 +317,7 @@ get_rand_pool(FState *st)
  * update pools
  */
 void
-add_entropy(FState *st, const uint8 *data, unsigned len)
+add_entropy_int(FState *st, const uint8 *data, unsigned len)
 {
 	unsigned	pos;
 	uint8		hash[BLOCK];
@@ -444,7 +444,7 @@ fortuna_add_entropy(const uint8 *data, unsigned len)
 	}
 	if (!data || !len)
 		return;
-	add_entropy(&main_state, data, len);
+	add_entropy_int(&main_state, data, len);
 }
 
 void
