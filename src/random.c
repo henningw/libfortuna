@@ -42,8 +42,6 @@
  * is expected event.
  */
 
-#define TRY_DEV_RANDOM
-
 #include <fcntl.h>
 #include <unistd.h>
 
