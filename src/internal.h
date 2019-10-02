@@ -33,13 +33,11 @@
 #define __INTERNAL_H
 
 #include <stdlib.h>
-#include <malloc_np.h>
 #include <time.h>
 
 #include "px.h"
 #include "md5.h"
 #include "sha1.h"
-#include "blf.h"
 #include "rijndael.h"
 #include "fortuna.h"
 
@@ -113,7 +111,6 @@ struct int_ctx
 	uint8		iv[INT_MAX_IV];
 	union
 	{
-		BlowfishContext bf;
 		rijndael_ctx rj;
 	}			ctx;
 	unsigned	keylen;
@@ -134,17 +131,8 @@ int rj_real_init(struct int_ctx * cx, int dir);
 int rj_encrypt(PX_Cipher *c, const uint8 *data, unsigned dlen, uint8 *res);
 int rj_decrypt(PX_Cipher *c, const uint8 *data, unsigned dlen, uint8 *res);
 PX_Cipher *rj_load(int mode);
-unsigned bf_block_size(PX_Cipher *c);
-unsigned bf_key_size(PX_Cipher *c);
-unsigned bf_iv_size(PX_Cipher *c);
-int bf_init(PX_Cipher *c, const uint8 *key, unsigned klen, const uint8 *iv);
-int bf_encrypt(PX_Cipher *c, const uint8 *data, unsigned dlen, uint8 *res);
-int bf_decrypt(PX_Cipher *c, const uint8 *data, unsigned dlen, uint8 *res);
-PX_Cipher *bf_load(int mode);
 PX_Cipher *rj_128_ecb(void);
 PX_Cipher *rj_128_cbc(void);
-PX_Cipher *bf_ecb_load(void);
-PX_Cipher *bf_cbc_load(void);
 
 int px_find_digest(const char *name, PX_MD **res);
 

@@ -35,7 +35,6 @@
 #include "md5.h"
 #include "sha1.h"
 #include "sha2.h"
-#include "blf.h"
 #include "rijndael.h"
 #include "fortuna.h"
 #include "internal.h"
@@ -53,16 +52,12 @@ struct int_cipher
 
 const struct int_cipher
 			int_ciphers[] = {
-	{"bf-cbc", bf_cbc_load},
-	{"bf-ecb", bf_ecb_load},
 	{"aes-128-cbc", rj_128_cbc},
 	{"aes-128-ecb", rj_128_ecb},
 	{NULL, NULL}
 };
 
 const PX_Alias int_aliases[] = {
-	{"bf", "bf-cbc"},
-	{"blowfish", "bf-cbc"},
 	{"aes", "aes-128-cbc"},
 	{"aes-ecb", "aes-128-ecb"},
 	{"aes-cbc", "aes-128-cbc"},
@@ -382,113 +377,6 @@ rj_load(int mode)
 	return c;
 }
 
-/*
- * blowfish
- */
-
-unsigned
-bf_block_size(PX_Cipher *c)
-{
-	return 8;
-}
-
-unsigned
-bf_key_size(PX_Cipher *c)
-{
-	return 448 / 8;
-}
-
-unsigned
-bf_iv_size(PX_Cipher *c)
-{
-	return 8;
-}
-
-int
-bf_init(PX_Cipher *c, const uint8 *key, unsigned klen, const uint8 *iv)
-{
-	struct int_ctx *cx = (struct int_ctx *) c->ptr;
-
-	blowfish_setkey(&cx->ctx.bf, key, klen);
-	if (iv)
-		blowfish_setiv(&cx->ctx.bf, iv);
-
-	return 0;
-}
-
-int
-bf_encrypt(PX_Cipher *c, const uint8 *data, unsigned dlen, uint8 *res)
-{
-	struct int_ctx *cx = (struct int_ctx *) c->ptr;
-	BlowfishContext *bfctx = &cx->ctx.bf;
-
-	if (dlen == 0)
-		return 0;
-
-	if (dlen & 7)
-		return PXE_NOTBLOCKSIZE;
-
-	memcpy(res, data, dlen);
-	switch (cx->mode)
-	{
-		case MODE_ECB:
-			blowfish_encrypt_ecb(res, dlen, bfctx);
-			break;
-		case MODE_CBC:
-			blowfish_encrypt_cbc(res, dlen, bfctx);
-			break;
-	}
-	return 0;
-}
-
-int
-bf_decrypt(PX_Cipher *c, const uint8 *data, unsigned dlen, uint8 *res)
-{
-	struct int_ctx *cx = (struct int_ctx *) c->ptr;
-	BlowfishContext *bfctx = &cx->ctx.bf;
-
-	if (dlen == 0)
-		return 0;
-
-	if (dlen & 7)
-		return PXE_NOTBLOCKSIZE;
-
-	memcpy(res, data, dlen);
-	switch (cx->mode)
-	{
-		case MODE_ECB:
-			blowfish_decrypt_ecb(res, dlen, bfctx);
-			break;
-		case MODE_CBC:
-			blowfish_decrypt_cbc(res, dlen, bfctx);
-			break;
-	}
-	return 0;
-}
-
-PX_Cipher *
-bf_load(int mode)
-{
-	PX_Cipher  *c;
-	struct int_ctx *cx;
-
-	c = malloc(sizeof *c);
-	memset(c, 0, sizeof *c);
-
-	c->block_size = bf_block_size;
-	c->key_size = bf_key_size;
-	c->iv_size = bf_iv_size;
-	c->init = bf_init;
-	c->encrypt = bf_encrypt;
-	c->decrypt = bf_decrypt;
-	c->free = intctx_free;
-
-	cx = malloc(sizeof *cx);
-	memset(cx, 0, sizeof *cx);
-	cx->mode = mode;
-	c->ptr = cx;
-	return c;
-}
 
 /* ciphers */
 
@@ -502,18 +390,6 @@ PX_Cipher *
 rj_128_cbc(void)
 {
 	return rj_load(MODE_CBC);
-}
-
-PX_Cipher *
-bf_ecb_load(void)
-{
-	return bf_load(MODE_ECB);
-}
-
-PX_Cipher *
-bf_cbc_load(void)
-{
-	return bf_load(MODE_CBC);
 }
 
 int
