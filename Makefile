@@ -1,4 +1,4 @@
-CC?=		clang
+CC?=		gcc
 AR?=		ar
 INSTALL?=	install
 PREFIX?=	/usr/local
