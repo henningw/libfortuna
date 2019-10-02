@@ -7,8 +7,13 @@ The original source location (in the postgres source tree) is
 contrib/pgcrypto. Also, parts of src/include/postgres.h and 
 src/include/c.h
 
-Waitman Gobble <waitman@waitman.net> 2013-07-12
+The postgres specific parts were reduced and also the not needed
+blowfish cypher implementation removed.
 
-Documentation and more information at the following URL:
+Waitman Gobble <waitman@waitman.net> 2013-07-12
+Henning Westerholt <hw@skalatan.de> 2019-10-02
+
+Documentation and more information at the following URL
+(don't work anymore - todo)
 http://www.crxwg.com/fortuna/bin/libfortuna.html
 
