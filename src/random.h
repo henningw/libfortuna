@@ -1,10 +1,14 @@
 /*
  * random.h
  *              Acquire randomness from system.  For seeding RNG.
+ *              Get pseudo random numbers from RNG.
  *
  * Copyright (c) 2001 Marko Kreen
  * Copyright (c) 2019 Henning Westerholt
  * All rights reserved.
+ *
+ * Based on https://github.com/waitman/libfortuna, refactoring
+ * done in this version: https://github.com/henningw/libfortuna
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions

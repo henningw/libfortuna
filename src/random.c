@@ -1,10 +1,14 @@
 /*
  * random.c
- *		Acquire randomness from system.  For seeding RNG.
+ *		Acquire randomness from system, for seeding RNG.
+ *		Get pseudo random numbers from RNG.
  *
  * Copyright (c) 2001 Marko Kreen
  * Copyright (c) 2019 Henning Westerholt
  * All rights reserved.
+ *
+ * Based on https://github.com/waitman/libfortuna, refactoring
+ * done in this version: https://github.com/henningw/libfortuna
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -32,9 +36,11 @@
 
 #include <errno.h>
 #include <time.h>
+#include <sys/types.h>
+#include <string.h>
+
 #include "random.h"
 #include "fortuna.h"
-#include "c.h"
 
 /* how many bytes to ask from system random provider */
 #define RND_BYTES  32
@@ -52,7 +58,7 @@
 static time_t seed_time = 0;
 static time_t check_time = 0;
 
-static int get_random_bytes_int(uint8 *dst, unsigned count);
+static int get_random_bytes_int(u_int8_t *dst, unsigned count);
 
 /* private functions */
 
@@ -78,7 +84,7 @@ static int safe_read(int fd, void *buf, size_t count)
 	return done;
 }
 
-static uint8 * try_dev_random(uint8 *dst)
+static u_int8_t * try_dev_random(u_int8_t *dst)
 {
 	int			fd;
 	int			res;
@@ -102,9 +108,9 @@ static uint8 * try_dev_random(uint8 *dst)
  *
  * dst should have room for 1024 bytes.
  */
-static unsigned acquire_system_randomness(uint8 *dst)
+static unsigned acquire_system_randomness(u_int8_t *dst)
 {
-	uint8	   *p = dst;
+	u_int8_t	   *p = dst;
 
 	p = try_dev_random(p);
 	return p - dst;
@@ -112,7 +118,7 @@ static unsigned acquire_system_randomness(uint8 *dst)
 
 static void system_reseed(void)
 {
-        uint8           buf[1024];
+        u_int8_t           buf[1024];
         int                     n;
         time_t          t;
         int                     skip = 1;
@@ -148,7 +154,7 @@ static void system_reseed(void)
         memset(buf, 0, sizeof(buf));
 }
 
-static int get_random_bytes_int(uint8 *dst, unsigned count)
+static int get_random_bytes_int(u_int8_t *dst, unsigned count)
 {
         system_reseed();
         fortuna_get_bytes(count, dst);
@@ -157,14 +163,14 @@ static int get_random_bytes_int(uint8 *dst, unsigned count)
 
 /* public functions */
 
-int get_pseudo_random_bytes(uint8 *dst, unsigned count)
+int get_pseudo_random_bytes(u_int8_t *dst, unsigned count)
 {
         return get_random_bytes_int(dst, count);
 }
 
 
 
-int add_entropy(const uint8 *data, unsigned count)
+int add_entropy(const u_int8_t *data, unsigned count)
 {
         system_reseed();
         fortuna_add_entropy(data, count);

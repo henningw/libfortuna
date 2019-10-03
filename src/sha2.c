@@ -37,16 +37,16 @@
  */
 
 #include <sys/param.h>
+#include <string.h>
 
-#include "c.h"
 #include "sha2.h"
 
 
 #if 0 /*def SHA2_USE_INTTYPES_H*/
 
-typedef uint8_t  sha2_byte;	/* Exactly 1 byte */
-typedef uint32_t sha2_word32;	/* Exactly 4 bytes */
-typedef uint64_t sha2_word64;	/* Exactly 8 bytes */
+typedef u_int8_t_t  sha2_byte;	/* Exactly 1 byte */
+typedef u_int32_t_t sha2_word32;	/* Exactly 4 bytes */
+typedef u_int64_t_t sha2_word64;	/* Exactly 8 bytes */
 
 #else /* SHA2_USE_INTTYPES_H */
 
@@ -459,7 +459,7 @@ SHA256_Transform(SHA256_CTX *context, const sha2_word32 *data)
 #endif   /* SHA2_UNROLL_TRANSFORM */
 
 void
-SHA256_Update(SHA256_CTX *context, const uint8 *data, size_t len)
+SHA256_Update(SHA256_CTX *context, const u_int8_t *data, size_t len)
 {
 	size_t		freespace,
 				usedspace;
@@ -560,7 +560,7 @@ SHA256_Last(SHA256_CTX *context)
 }
 
 void
-SHA256_Final(uint8 digest[], SHA256_CTX *context)
+SHA256_Final(u_int8_t digest[], SHA256_CTX *context)
 {
 	/* If no digest buffer is passed, we don't bother doing this: */
 	if (digest != NULL)
@@ -785,7 +785,7 @@ SHA512_Transform(SHA512_CTX *context, const sha2_word64 *data)
 #endif   /* SHA2_UNROLL_TRANSFORM */
 
 void
-SHA512_Update(SHA512_CTX *context, const uint8 *data, size_t len)
+SHA512_Update(SHA512_CTX *context, const u_int8_t *data, size_t len)
 {
 	size_t		freespace,
 				usedspace;
@@ -888,7 +888,7 @@ SHA512_Last(SHA512_CTX *context)
 }
 
 void
-SHA512_Final(uint8 digest[], SHA512_CTX *context)
+SHA512_Final(u_int8_t digest[], SHA512_CTX *context)
 {
 	/* If no digest buffer is passed, we don't bother doing this: */
 	if (digest != NULL)
@@ -927,13 +927,13 @@ SHA384_Init(SHA384_CTX *context)
 }
 
 void
-SHA384_Update(SHA384_CTX *context, const uint8 *data, size_t len)
+SHA384_Update(SHA384_CTX *context, const u_int8_t *data, size_t len)
 {
 	SHA512_Update((SHA512_CTX *) context, data, len);
 }
 
 void
-SHA384_Final(uint8 digest[], SHA384_CTX *context)
+SHA384_Final(u_int8_t digest[], SHA384_CTX *context)
 {
 	/* If no digest buffer is passed, we don't bother doing this: */
 	if (digest != NULL)
@@ -971,13 +971,13 @@ SHA224_Init(SHA224_CTX *context)
 }
 
 void
-SHA224_Update(SHA224_CTX *context, const uint8 *data, size_t len)
+SHA224_Update(SHA224_CTX *context, const u_int8_t *data, size_t len)
 {
 	SHA256_Update((SHA256_CTX *) context, data, len);
 }
 
 void
-SHA224_Final(uint8 digest[], SHA224_CTX *context)
+SHA224_Final(u_int8_t digest[], SHA224_CTX *context)
 {
 	/* If no digest buffer is passed, we don't bother doing this: */
 	if (digest != NULL)

@@ -31,8 +31,9 @@
 
 #include <sys/time.h>
 #include <time.h>
+#include <sys/types.h>
+#include <string.h>
 
-#include "c.h"
 #include "rijndael.h"
 #include "sha2.h"
 #include "fortuna.h"
@@ -115,9 +116,9 @@
 
 struct fortuna_state
 {
-	uint8		counter[CIPH_BLOCK];
-	uint8		result[CIPH_BLOCK];
-	uint8		key[BLOCK];
+	u_int8_t		counter[CIPH_BLOCK];
+	u_int8_t		result[CIPH_BLOCK];
+	u_int8_t		key[BLOCK];
 	MD_CTX		pool[NUM_POOLS];
 	CIPH_CTX	ciph;
 	unsigned	reseed_count;
@@ -138,36 +139,36 @@ typedef struct fortuna_state FState;
  */
 
 void
-ciph_init(CIPH_CTX * ctx, const uint8 *key, int klen)
+ciph_init(CIPH_CTX * ctx, const u_int8_t *key, int klen)
 {
-	rijndael_set_key(ctx, (const uint32 *) key, klen, 1);
+	rijndael_set_key(ctx, (const u_int32_t *) key, klen, 1);
 }
 
 void
-ciph_encrypt(CIPH_CTX * ctx, const uint8 *in, uint8 *out)
+ciph_encrypt(CIPH_CTX * ctx, const u_int8_t *in, u_int8_t *out)
 {
-	rijndael_encrypt(ctx, (const uint32 *) in, (uint32 *) out);
+	rijndael_encrypt(ctx, (const u_int32_t *) in, (u_int32_t *) out);
 }
 
 void
 md_init(MD_CTX * ctx)
 {
-	SHA256_Init(ctx);
+	pg_SHA256_Init(ctx);
 }
 
 void
-md_update(MD_CTX * ctx, const uint8 *data, int len)
+md_update(MD_CTX * ctx, const u_int8_t *data, int len)
 {
-	SHA256_Update(ctx, data, len);
+	pg_SHA256_Update(ctx, data, len);
 }
 
 void
-md_result(MD_CTX * ctx, uint8 *dst)
+md_result(MD_CTX * ctx, u_int8_t *dst)
 {
 	SHA256_CTX	tmp;
 
 	memcpy(&tmp, ctx, sizeof(*ctx));
-	SHA256_Final(dst, &tmp);
+	pg_SHA256_Final(dst, &tmp);
 	memset(&tmp, 0, sizeof(tmp));
 }
 
@@ -191,7 +192,7 @@ init_state(FState *st)
 void
 inc_counter(FState *st)
 {
-	uint32	   *val = (uint32 *) st->counter;
+	u_int32_t	   *val = (u_int32_t *) st->counter;
 
 	if (++val[0])
 		return;
@@ -206,7 +207,7 @@ inc_counter(FState *st)
  * This is called 'cipher in counter mode'.
  */
 void
-encrypt_counter(FState *st, uint8 *dst)
+encrypt_counter(FState *st, u_int8_t *dst)
 {
 	ciph_encrypt(&st->ciph, st->counter, dst);
 	inc_counter(st);
@@ -256,7 +257,7 @@ reseed(FState *st)
 	unsigned	k;
 	unsigned	n;
 	MD_CTX		key_md;
-	uint8		buf[BLOCK];
+	u_int8_t		buf[BLOCK];
 
 	/* set pool as empty */
 	st->pool0_bytes = 0;
@@ -317,10 +318,10 @@ get_rand_pool(FState *st)
  * update pools
  */
 void
-add_entropy_int(FState *st, const uint8 *data, unsigned len)
+add_entropy_int(FState *st, const u_int8_t *data, unsigned len)
 {
 	unsigned	pos;
-	uint8		hash[BLOCK];
+	u_int8_t		hash[BLOCK];
 	MD_CTX		md;
 
 	/* hash given data */
@@ -365,7 +366,7 @@ void
 startup_tricks(FState *st)
 {
 	int			i;
-	uint8		buf[BLOCK];
+	u_int8_t		buf[BLOCK];
 
 	/* Use next block as counter. */
 	encrypt_counter(st, st->counter);
@@ -387,7 +388,7 @@ startup_tricks(FState *st)
 }
 
 void
-extract_data(FState *st, unsigned count, uint8 *dst)
+extract_data(FState *st, unsigned count, u_int8_t *dst)
 {
 	unsigned	n;
 	unsigned	block_nr = 0;
@@ -435,7 +436,7 @@ FState main_state;
 int	init_done = 0;
 
 void
-fortuna_add_entropy(const uint8 *data, unsigned len)
+fortuna_add_entropy(const u_int8_t *data, unsigned len)
 {
 	if (!init_done)
 	{
@@ -448,7 +449,7 @@ fortuna_add_entropy(const uint8 *data, unsigned len)
 }
 
 void
-fortuna_get_bytes(unsigned len, uint8 *dst)
+fortuna_get_bytes(unsigned len, u_int8_t *dst)
 {
 	if (!init_done)
 	{

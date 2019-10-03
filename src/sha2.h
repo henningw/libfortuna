@@ -38,7 +38,7 @@
 #ifndef _SHA2_H
 #define _SHA2_H
 
-#include "c.h"
+#include <sys/types.h>
 
 /* avoid conflict with OpenSSL */
 #define SHA256_Init pg_SHA256_Init
@@ -69,34 +69,34 @@
 /*** SHA-256/384/512 Context Structures *******************************/
 typedef struct _SHA256_CTX
 {
-	uint32		state[8];
-	uint64		bitcount;
-	uint8		buffer[SHA256_BLOCK_LENGTH];
+	u_int32_t		state[8];
+	u_int64_t		bitcount;
+	u_int8_t		buffer[SHA256_BLOCK_LENGTH];
 } SHA256_CTX;
 typedef struct _SHA512_CTX
 {
-	uint64		state[8];
-	uint64		bitcount[2];
-	uint8		buffer[SHA512_BLOCK_LENGTH];
+	u_int64_t		state[8];
+	u_int64_t		bitcount[2];
+	u_int8_t		buffer[SHA512_BLOCK_LENGTH];
 } SHA512_CTX;
 
 typedef SHA256_CTX SHA224_CTX;
 typedef SHA512_CTX SHA384_CTX;
 
 void		SHA224_Init(SHA224_CTX *);
-void		SHA224_Update(SHA224_CTX *, const uint8 *, size_t);
-void		SHA224_Final(uint8[SHA224_DIGEST_LENGTH], SHA224_CTX *);
+void		SHA224_Update(SHA224_CTX *, const u_int8_t *, size_t);
+void		SHA224_Final(u_int8_t[SHA224_DIGEST_LENGTH], SHA224_CTX *);
 
 void		SHA256_Init(SHA256_CTX *);
-void		SHA256_Update(SHA256_CTX *, const uint8 *, size_t);
-void		SHA256_Final(uint8[SHA256_DIGEST_LENGTH], SHA256_CTX *);
+void		SHA256_Update(SHA256_CTX *, const u_int8_t *, size_t);
+void		SHA256_Final(u_int8_t[SHA256_DIGEST_LENGTH], SHA256_CTX *);
 
 void		SHA384_Init(SHA384_CTX *);
-void		SHA384_Update(SHA384_CTX *, const uint8 *, size_t);
-void		SHA384_Final(uint8[SHA384_DIGEST_LENGTH], SHA384_CTX *);
+void		SHA384_Update(SHA384_CTX *, const u_int8_t *, size_t);
+void		SHA384_Final(u_int8_t[SHA384_DIGEST_LENGTH], SHA384_CTX *);
 
 void		SHA512_Init(SHA512_CTX *);
-void		SHA512_Update(SHA512_CTX *, const uint8 *, size_t);
-void		SHA512_Final(uint8[SHA512_DIGEST_LENGTH], SHA512_CTX *);
+void		SHA512_Update(SHA512_CTX *, const u_int8_t *, size_t);
+void		SHA512_Final(u_int8_t[SHA512_DIGEST_LENGTH], SHA512_CTX *);
 
 #endif   /* _SHA2_H */
