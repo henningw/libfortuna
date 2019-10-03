@@ -58,7 +58,7 @@
 static time_t seed_time = 0;
 static time_t check_time = 0;
 
-static int get_random_bytes_int(u_int8_t *dst, unsigned count);
+static int get_random_bytes(u_int8_t *dst, unsigned count);
 
 /* private functions */
 
@@ -137,7 +137,7 @@ static void system_reseed(void)
                 check_time = t;
 
                 /* roll dice */
-                get_random_bytes_int(buf, 1);
+                get_random_bytes(buf, 1);
                 skip = buf[0] >= SYSTEM_RESEED_CHANCE;
         }
         /* clear 1 byte */
@@ -154,7 +154,7 @@ static void system_reseed(void)
         memset(buf, 0, sizeof(buf));
 }
 
-static int get_random_bytes_int(u_int8_t *dst, unsigned count)
+static int get_random_bytes(u_int8_t *dst, unsigned count)
 {
         system_reseed();
         fortuna_get_bytes(count, dst);
@@ -165,7 +165,7 @@ static int get_random_bytes_int(u_int8_t *dst, unsigned count)
 
 int get_pseudo_random_bytes(u_int8_t *dst, unsigned count)
 {
-        return get_random_bytes_int(dst, count);
+        return get_random_bytes(dst, count);
 }
 
 
