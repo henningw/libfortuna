@@ -1,0 +1,62 @@
+\hypertarget{random_8h}{}\section{random.\+h File Reference}
+\label{random_8h}\index{random.\+h@{random.\+h}}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{random_8h_a5999d34013d54df8bc6336dded8a0438}{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+M\+IN}}~(20$\ast$60)         /$\ast$ 20 min $\ast$/
+\item 
+\#define \mbox{\hyperlink{random_8h_afddf26effa33dfc20c2f2fc2b33c2f58}{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+C\+H\+E\+C\+K\+\_\+\+T\+I\+ME}}~(10$\ast$60)         /$\ast$ 10 min $\ast$/
+\item 
+\#define \mbox{\hyperlink{random_8h_a726ef83e08160dc26d3b35dccc5a6dad}{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+C\+H\+A\+N\+CE}}~(4) /$\ast$ 256/4 $\ast$ 10min $\sim$ 10h $\ast$/
+\item 
+\#define \mbox{\hyperlink{random_8h_aa3862bbf6a5886886f13c91dbb2eed61}{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+M\+AX}}~(12$\ast$60$\ast$60)      /$\ast$ 12h $\ast$/
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{random_8h_aafb5f8c17770bb2bb98c37727ad9876f}{get\+\_\+pseudo\+\_\+random\+\_\+bytes}} (unsigned char $\ast$dst, unsigned count)
+\item 
+int \mbox{\hyperlink{random_8h_aa1337ece2a5d0e36587b13fd538caca6}{add\+\_\+entropy}} (const unsigned char $\ast$data, unsigned count)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{random_8h_a726ef83e08160dc26d3b35dccc5a6dad}\label{random_8h_a726ef83e08160dc26d3b35dccc5a6dad}} 
+\index{random.\+h@{random.\+h}!S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+C\+H\+A\+N\+CE@{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+C\+H\+A\+N\+CE}}
+\index{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+C\+H\+A\+N\+CE@{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+C\+H\+A\+N\+CE}!random.\+h@{random.\+h}}
+\subsubsection{\texorpdfstring{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+C\+H\+A\+N\+CE}{SYSTEM\_RESEED\_CHANCE}}
+{\footnotesize\ttfamily \#define S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+C\+H\+A\+N\+CE~(4) /$\ast$ 256/4 $\ast$ 10min $\sim$ 10h $\ast$/}
+
+\mbox{\Hypertarget{random_8h_afddf26effa33dfc20c2f2fc2b33c2f58}\label{random_8h_afddf26effa33dfc20c2f2fc2b33c2f58}} 
+\index{random.\+h@{random.\+h}!S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+C\+H\+E\+C\+K\+\_\+\+T\+I\+ME@{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+C\+H\+E\+C\+K\+\_\+\+T\+I\+ME}}
+\index{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+C\+H\+E\+C\+K\+\_\+\+T\+I\+ME@{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+C\+H\+E\+C\+K\+\_\+\+T\+I\+ME}!random.\+h@{random.\+h}}
+\subsubsection{\texorpdfstring{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+C\+H\+E\+C\+K\+\_\+\+T\+I\+ME}{SYSTEM\_RESEED\_CHECK\_TIME}}
+{\footnotesize\ttfamily \#define S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+C\+H\+E\+C\+K\+\_\+\+T\+I\+ME~(10$\ast$60)         /$\ast$ 10 min $\ast$/}
+
+\mbox{\Hypertarget{random_8h_aa3862bbf6a5886886f13c91dbb2eed61}\label{random_8h_aa3862bbf6a5886886f13c91dbb2eed61}} 
+\index{random.\+h@{random.\+h}!S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+M\+AX@{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+M\+AX}}
+\index{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+M\+AX@{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+M\+AX}!random.\+h@{random.\+h}}
+\subsubsection{\texorpdfstring{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+M\+AX}{SYSTEM\_RESEED\_MAX}}
+{\footnotesize\ttfamily \#define S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+M\+AX~(12$\ast$60$\ast$60)      /$\ast$ 12h $\ast$/}
+
+\mbox{\Hypertarget{random_8h_a5999d34013d54df8bc6336dded8a0438}\label{random_8h_a5999d34013d54df8bc6336dded8a0438}} 
+\index{random.\+h@{random.\+h}!S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+M\+IN@{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+M\+IN}}
+\index{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+M\+IN@{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+M\+IN}!random.\+h@{random.\+h}}
+\subsubsection{\texorpdfstring{S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+M\+IN}{SYSTEM\_RESEED\_MIN}}
+{\footnotesize\ttfamily \#define S\+Y\+S\+T\+E\+M\+\_\+\+R\+E\+S\+E\+E\+D\+\_\+\+M\+IN~(20$\ast$60)         /$\ast$ 20 min $\ast$/}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{random_8h_aa1337ece2a5d0e36587b13fd538caca6}\label{random_8h_aa1337ece2a5d0e36587b13fd538caca6}} 
+\index{random.\+h@{random.\+h}!add\+\_\+entropy@{add\+\_\+entropy}}
+\index{add\+\_\+entropy@{add\+\_\+entropy}!random.\+h@{random.\+h}}
+\subsubsection{\texorpdfstring{add\+\_\+entropy()}{add\_entropy()}}
+{\footnotesize\ttfamily int add\+\_\+entropy (\begin{DoxyParamCaption}\item[{const unsigned char $\ast$}]{data,  }\item[{unsigned}]{count }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{random_8h_aafb5f8c17770bb2bb98c37727ad9876f}\label{random_8h_aafb5f8c17770bb2bb98c37727ad9876f}} 
+\index{random.\+h@{random.\+h}!get\+\_\+pseudo\+\_\+random\+\_\+bytes@{get\+\_\+pseudo\+\_\+random\+\_\+bytes}}
+\index{get\+\_\+pseudo\+\_\+random\+\_\+bytes@{get\+\_\+pseudo\+\_\+random\+\_\+bytes}!random.\+h@{random.\+h}}
+\subsubsection{\texorpdfstring{get\+\_\+pseudo\+\_\+random\+\_\+bytes()}{get\_pseudo\_random\_bytes()}}
+{\footnotesize\ttfamily int get\+\_\+pseudo\+\_\+random\+\_\+bytes (\begin{DoxyParamCaption}\item[{unsigned char $\ast$}]{dst,  }\item[{unsigned}]{count }\end{DoxyParamCaption})}
+

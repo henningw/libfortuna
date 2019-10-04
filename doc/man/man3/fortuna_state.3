@@ -1,8 +1,8 @@
-.TH "fortuna_state" 3 "Fri Jul 19 2013" "Version 1" "libfortuna" \" -*- nroff -*-
+.TH "fortuna_state" 3 "Fri Oct 4 2019" "Version 1" "libfortuna" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-fortuna_state \- 
+fortuna_state
 .SH SYNOPSIS
 .br
 .PP
@@ -10,13 +10,13 @@ fortuna_state \-
 
 .in +1c
 .ti -1c
-.RI "\fBuint8\fP \fBcounter\fP [\fBCIPH_BLOCK\fP]"
+.RI "u_int8_t \fBcounter\fP [\fBCIPH_BLOCK\fP]"
 .br
 .ti -1c
-.RI "\fBuint8\fP \fBresult\fP [\fBCIPH_BLOCK\fP]"
+.RI "u_int8_t \fBresult\fP [\fBCIPH_BLOCK\fP]"
 .br
 .ti -1c
-.RI "\fBuint8\fP \fBkey\fP [\fBBLOCK\fP]"
+.RI "u_int8_t \fBkey\fP [\fBBLOCK\fP]"
 .br
 .ti -1c
 .RI "\fBMD_CTX\fP \fBpool\fP [\fBNUM_POOLS\fP]"
@@ -44,9 +44,9 @@ fortuna_state \-
 .PP 
 .SS "\fBCIPH_CTX\fP fortuna_state::ciph"
 
-.SS "\fBuint8\fP fortuna_state::counter[\fBCIPH_BLOCK\fP]"
+.SS "u_int8_t fortuna_state::counter[\fBCIPH_BLOCK\fP]"
 
-.SS "\fBuint8\fP fortuna_state::key[\fBBLOCK\fP]"
+.SS "u_int8_t fortuna_state::key[\fBBLOCK\fP]"
 
 .SS "struct timeval fortuna_state::last_reseed_time"
 
@@ -56,7 +56,7 @@ fortuna_state \-
 
 .SS "unsigned fortuna_state::reseed_count"
 
-.SS "\fBuint8\fP fortuna_state::result[\fBCIPH_BLOCK\fP]"
+.SS "u_int8_t fortuna_state::result[\fBCIPH_BLOCK\fP]"
 
 .SS "unsigned fortuna_state::rnd_pos"
 

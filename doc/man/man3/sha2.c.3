@@ -1,14 +1,14 @@
-.TH "sha2.c" 3 "Fri Jul 19 2013" "Version 1" "libfortuna" \" -*- nroff -*-
+.TH "sha2.c" 3 "Fri Oct 4 2019" "Version 1" "libfortuna" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-sha2.c \- 
+sha2.c
 .SH SYNOPSIS
 .br
 .PP
 \fC#include <sys/param\&.h>\fP
 .br
-\fC#include 'c\&.h'\fP
+\fC#include <string\&.h>\fP
 .br
 \fC#include 'sha2\&.h'\fP
 .br
@@ -17,37 +17,37 @@ sha2.c \-
 
 .in +1c
 .ti -1c
-.RI "#define \fBSHA256_SHORT_BLOCK_LENGTH\fP   (\fBSHA256_BLOCK_LENGTH\fP - 8)"
+.RI "#define \fBSHA256_SHORT_BLOCK_LENGTH\fP   (\fBSHA256_BLOCK_LENGTH\fP \- 8)"
 .br
 .ti -1c
-.RI "#define \fBSHA384_SHORT_BLOCK_LENGTH\fP   (\fBSHA384_BLOCK_LENGTH\fP - 16)"
+.RI "#define \fBSHA384_SHORT_BLOCK_LENGTH\fP   (\fBSHA384_BLOCK_LENGTH\fP \- 16)"
 .br
 .ti -1c
-.RI "#define \fBSHA512_SHORT_BLOCK_LENGTH\fP   (\fBSHA512_BLOCK_LENGTH\fP - 16)"
+.RI "#define \fBSHA512_SHORT_BLOCK_LENGTH\fP   (\fBSHA512_BLOCK_LENGTH\fP \- 16)"
 .br
 .ti -1c
-.RI "#define \fBREVERSE32\fP(w, x)"
+.RI "#define \fBREVERSE32\fP(w,  x)"
 .br
 .ti -1c
-.RI "#define \fBREVERSE64\fP(w, x)"
+.RI "#define \fBREVERSE64\fP(w,  x)"
 .br
 .ti -1c
-.RI "#define \fBADDINC128\fP(w, n)"
+.RI "#define \fBADDINC128\fP(w,  n)"
 .br
 .ti -1c
-.RI "#define \fBR\fP(b, x)   ((x) >> (b))"
+.RI "#define \fBR\fP(b,  x)   ((x) >> (b))"
 .br
 .ti -1c
-.RI "#define \fBS32\fP(b, x)   (((x) >> (b)) | ((x) << (32 - (b))))"
+.RI "#define \fBS32\fP(b,  x)   (((x) >> (b)) | ((x) << (32 \- (b))))"
 .br
 .ti -1c
-.RI "#define \fBS64\fP(b, x)   (((x) >> (b)) | ((x) << (64 - (b))))"
+.RI "#define \fBS64\fP(b,  x)   (((x) >> (b)) | ((x) << (64 \- (b))))"
 .br
 .ti -1c
-.RI "#define \fBCh\fP(x, y, z)   (((x) & (y)) ^ ((~(x)) & (z)))"
+.RI "#define \fBCh\fP(x,  y,  z)   (((x) & (y)) ^ ((~(x)) & (z)))"
 .br
 .ti -1c
-.RI "#define \fBMaj\fP(x, y, z)   (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))"
+.RI "#define \fBMaj\fP(x,  y,  z)   (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))"
 .br
 .ti -1c
 .RI "#define \fBSigma0_256\fP(x)   (\fBS32\fP(2,  (x)) ^ \fBS32\fP(13, (x)) ^ \fBS32\fP(22, (x)))"
@@ -74,78 +74,70 @@ sha2.c \-
 .RI "#define \fBsigma1_512\fP(x)   (\fBS64\fP(19, (x)) ^ \fBS64\fP(61, (x)) ^ \fBR\fP( 6,   (x)))"
 .br
 .in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef u_int8_t \fBsha2_byte\fP"
+.br
+.ti -1c
+.RI "typedef u_int32_t \fBsha2_word32\fP"
+.br
+.ti -1c
+.RI "typedef u_int64_t \fBsha2_word64\fP"
+.br
+.in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
-.RI "void \fBSHA512_Last\fP (\fBSHA512_CTX\fP *)"
-.br
-.ti -1c
-.RI "void \fBSHA256_Transform\fP (\fBSHA256_CTX\fP *, const \fBuint8\fP *)"
-.br
-.ti -1c
-.RI "void \fBSHA512_Transform\fP (\fBSHA512_CTX\fP *, const \fBuint8\fP *)"
-.br
-.ti -1c
 .RI "void \fBSHA256_Init\fP (\fBSHA256_CTX\fP *context)"
 .br
 .ti -1c
-.RI "void \fBSHA256_Update\fP (\fBSHA256_CTX\fP *context, const \fBuint8\fP *data, size_t len)"
+.RI "void \fBSHA256_Update\fP (\fBSHA256_CTX\fP *context, const u_int8_t *data, size_t len)"
 .br
 .ti -1c
 .RI "void \fBSHA256_Last\fP (\fBSHA256_CTX\fP *context)"
 .br
 .ti -1c
-.RI "void \fBSHA256_Final\fP (\fBuint8\fP digest[], \fBSHA256_CTX\fP *context)"
+.RI "void \fBSHA256_Final\fP (u_int8_t digest[], \fBSHA256_CTX\fP *context)"
 .br
 .ti -1c
 .RI "void \fBSHA512_Init\fP (\fBSHA512_CTX\fP *context)"
 .br
 .ti -1c
-.RI "void \fBSHA512_Update\fP (\fBSHA512_CTX\fP *context, const \fBuint8\fP *data, size_t len)"
+.RI "void \fBSHA512_Update\fP (\fBSHA512_CTX\fP *context, const u_int8_t *data, size_t len)"
 .br
 .ti -1c
-.RI "void \fBSHA512_Final\fP (\fBuint8\fP digest[], \fBSHA512_CTX\fP *context)"
+.RI "void \fBSHA512_Final\fP (u_int8_t digest[], \fBSHA512_CTX\fP *context)"
 .br
 .ti -1c
 .RI "void \fBSHA384_Init\fP (\fBSHA384_CTX\fP *context)"
 .br
 .ti -1c
-.RI "void \fBSHA384_Update\fP (\fBSHA384_CTX\fP *context, const \fBuint8\fP *data, size_t len)"
+.RI "void \fBSHA384_Update\fP (\fBSHA384_CTX\fP *context, const u_int8_t *data, size_t len)"
 .br
 .ti -1c
-.RI "void \fBSHA384_Final\fP (\fBuint8\fP digest[], \fBSHA384_CTX\fP *context)"
+.RI "void \fBSHA384_Final\fP (u_int8_t digest[], \fBSHA384_CTX\fP *context)"
 .br
 .ti -1c
 .RI "void \fBSHA224_Init\fP (\fBSHA224_CTX\fP *context)"
 .br
 .ti -1c
-.RI "void \fBSHA224_Update\fP (\fBSHA224_CTX\fP *context, const \fBuint8\fP *data, size_t len)"
+.RI "void \fBSHA224_Update\fP (\fBSHA224_CTX\fP *context, const u_int8_t *data, size_t len)"
 .br
 .ti -1c
-.RI "void \fBSHA224_Final\fP (\fBuint8\fP digest[], \fBSHA224_CTX\fP *context)"
+.RI "void \fBSHA224_Final\fP (u_int8_t digest[], \fBSHA224_CTX\fP *context)"
 .br
 .in -1c
 .SS "Variables"
 
 .in +1c
 .ti -1c
-.RI "const \fBuint32\fP \fBK256\fP [64]"
+.RI "const \fBsha2_word32\fP \fBK256\fP [64]"
 .br
 .ti -1c
-.RI "const \fBuint32\fP \fBsha224_initial_hash_value\fP [8]"
-.br
-.ti -1c
-.RI "const \fBuint32\fP \fBsha256_initial_hash_value\fP [8]"
-.br
-.ti -1c
-.RI "const \fBuint64\fP \fBK512\fP [80]"
-.br
-.ti -1c
-.RI "const \fBuint64\fP \fBsha384_initial_hash_value\fP [8]"
-.br
-.ti -1c
-.RI "const \fBuint64\fP \fBsha512_initial_hash_value\fP [8]"
+.RI "const \fBsha2_word32\fP \fBsha224_initial_hash_value\fP [8]"
 .br
 .in -1c
 .SH "Macro Definition Documentation"
@@ -155,7 +147,7 @@ sha2.c \-
 .PP
 .nf
 { \
-    (w)[0] += (uint64)(n); \
+    (w)[0] += (sha2_word64)(n); \
     if ((w)[0] < (n)) { \
         (w)[1]++; \
     } \
@@ -171,8 +163,8 @@ sha2.c \-
 \fBValue:\fP
 .PP
 .nf
-{ \\
-	uint32 tmp = (w); \
+{ \
+    sha2_word32 tmp = (w); \
     tmp = (tmp >> 16) | (tmp << 16); \
     (x) = ((tmp & 0xff00ff00UL) >> 8) | ((tmp & 0x00ff00ffUL) << 8); \
 }
@@ -181,8 +173,8 @@ sha2.c \-
 \fBValue:\fP
 .PP
 .nf
-{ \\
-	uint64 tmp = (w); \
+{ \
+    sha2_word64 tmp = (w); \
     tmp = (tmp >> 32) | (tmp << 32); \
     tmp = ((tmp & 0xff00ff00ff00ff00ULL) >> 8) | \
           ((tmp & 0x00ff00ff00ff00ffULL) << 8); \
@@ -190,15 +182,15 @@ sha2.c \-
           ((tmp & 0x0000ffff0000ffffULL) << 16); \
 }
 .fi
-.SS "#define S32(b, x)   (((x) >> (b)) | ((x) << (32 - (b))))"
+.SS "#define S32(b, x)   (((x) >> (b)) | ((x) << (32 \- (b))))"
 
-.SS "#define S64(b, x)   (((x) >> (b)) | ((x) << (64 - (b))))"
+.SS "#define S64(b, x)   (((x) >> (b)) | ((x) << (64 \- (b))))"
 
-.SS "#define SHA256_SHORT_BLOCK_LENGTH   (\fBSHA256_BLOCK_LENGTH\fP - 8)"
+.SS "#define SHA256_SHORT_BLOCK_LENGTH   (\fBSHA256_BLOCK_LENGTH\fP \- 8)"
 
-.SS "#define SHA384_SHORT_BLOCK_LENGTH   (\fBSHA384_BLOCK_LENGTH\fP - 16)"
+.SS "#define SHA384_SHORT_BLOCK_LENGTH   (\fBSHA384_BLOCK_LENGTH\fP \- 16)"
 
-.SS "#define SHA512_SHORT_BLOCK_LENGTH   (\fBSHA512_BLOCK_LENGTH\fP - 16)"
+.SS "#define SHA512_SHORT_BLOCK_LENGTH   (\fBSHA512_BLOCK_LENGTH\fP \- 16)"
 
 .SS "#define Sigma0_256(x)   (\fBS32\fP(2,  (x)) ^ \fBS32\fP(13, (x)) ^ \fBS32\fP(22, (x)))"
 
@@ -216,43 +208,45 @@ sha2.c \-
 
 .SS "#define sigma1_512(x)   (\fBS64\fP(19, (x)) ^ \fBS64\fP(61, (x)) ^ \fBR\fP( 6,   (x)))"
 
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef u_int8_t \fBsha2_byte\fP"
+
+.SS "typedef u_int32_t \fBsha2_word32\fP"
+
+.SS "typedef u_int64_t \fBsha2_word64\fP"
+
 .SH "Function Documentation"
 .PP 
-.SS "void SHA224_Final (\fBuint8\fPdigest[], \fBSHA224_CTX\fP *context)"
+.SS "void SHA224_Final (u_int8_t digest[], \fBSHA224_CTX\fP * context)"
 
-.SS "void SHA224_Init (\fBSHA224_CTX\fP *context)"
+.SS "void SHA224_Init (\fBSHA224_CTX\fP * context)"
 
-.SS "void SHA224_Update (\fBSHA224_CTX\fP *context, const \fBuint8\fP *data, size_tlen)"
+.SS "void SHA224_Update (\fBSHA224_CTX\fP * context, const u_int8_t * data, size_t len)"
 
-.SS "void SHA256_Final (\fBuint8\fPdigest[], \fBSHA256_CTX\fP *context)"
+.SS "void SHA256_Final (u_int8_t digest[], \fBSHA256_CTX\fP * context)"
 
-.SS "void SHA256_Init (\fBSHA256_CTX\fP *context)"
+.SS "void SHA256_Init (\fBSHA256_CTX\fP * context)"
 
-.SS "void SHA256_Last (\fBSHA256_CTX\fP *context)"
+.SS "void SHA256_Last (\fBSHA256_CTX\fP * context)"
 
-.SS "void SHA256_Transform (\fBSHA256_CTX\fP *context, const \fBuint8\fP *data)"
+.SS "void SHA256_Update (\fBSHA256_CTX\fP * context, const u_int8_t * data, size_t len)"
 
-.SS "void SHA256_Update (\fBSHA256_CTX\fP *context, const \fBuint8\fP *data, size_tlen)"
+.SS "void SHA384_Final (u_int8_t digest[], \fBSHA384_CTX\fP * context)"
 
-.SS "void SHA384_Final (\fBuint8\fPdigest[], \fBSHA384_CTX\fP *context)"
+.SS "void SHA384_Init (\fBSHA384_CTX\fP * context)"
 
-.SS "void SHA384_Init (\fBSHA384_CTX\fP *context)"
+.SS "void SHA384_Update (\fBSHA384_CTX\fP * context, const u_int8_t * data, size_t len)"
 
-.SS "void SHA384_Update (\fBSHA384_CTX\fP *context, const \fBuint8\fP *data, size_tlen)"
+.SS "void SHA512_Final (u_int8_t digest[], \fBSHA512_CTX\fP * context)"
 
-.SS "void SHA512_Final (\fBuint8\fPdigest[], \fBSHA512_CTX\fP *context)"
+.SS "void SHA512_Init (\fBSHA512_CTX\fP * context)"
 
-.SS "void SHA512_Init (\fBSHA512_CTX\fP *context)"
-
-.SS "void SHA512_Last (\fBSHA512_CTX\fP *context)"
-
-.SS "void SHA512_Transform (\fBSHA512_CTX\fP *context, const \fBuint8\fP *data)"
-
-.SS "void SHA512_Update (\fBSHA512_CTX\fP *context, const \fBuint8\fP *data, size_tlen)"
+.SS "void SHA512_Update (\fBSHA512_CTX\fP * context, const u_int8_t * data, size_t len)"
 
 .SH "Variable Documentation"
 .PP 
-.SS "const \fBuint32\fP K256[64]"
+.SS "const \fBsha2_word32\fP K256[64]"
 \fBInitial value:\fP
 .PP
 .nf
@@ -275,9 +269,7 @@ sha2.c \-
     0x90befffaUL, 0xa4506cebUL, 0xbef9a3f7UL, 0xc67178f2UL
 }
 .fi
-.SS "const \fBuint64\fP K512[80]"
-
-.SS "const \fBuint32\fP sha224_initial_hash_value[8]"
+.SS "const \fBsha2_word32\fP sha224_initial_hash_value[8]"
 \fBInitial value:\fP
 .PP
 .nf
@@ -290,51 +282,6 @@ sha2.c \-
     0x68581511UL,
     0x64f98fa7UL,
     0xbefa4fa4UL
-}
-.fi
-.SS "const \fBuint32\fP sha256_initial_hash_value[8]"
-\fBInitial value:\fP
-.PP
-.nf
-= {
-    0x6a09e667UL,
-    0xbb67ae85UL,
-    0x3c6ef372UL,
-    0xa54ff53aUL,
-    0x510e527fUL,
-    0x9b05688cUL,
-    0x1f83d9abUL,
-    0x5be0cd19UL
-}
-.fi
-.SS "const \fBuint64\fP sha384_initial_hash_value[8]"
-\fBInitial value:\fP
-.PP
-.nf
-= {
-    0xcbbb9d5dc1059ed8ULL,
-    0x629a292a367cd507ULL,
-    0x9159015a3070dd17ULL,
-    0x152fecd8f70e5939ULL,
-    0x67332667ffc00b31ULL,
-    0x8eb44a8768581511ULL,
-    0xdb0c2e0d64f98fa7ULL,
-    0x47b5481dbefa4fa4ULL
-}
-.fi
-.SS "const \fBuint64\fP sha512_initial_hash_value[8]"
-\fBInitial value:\fP
-.PP
-.nf
-= {
-    0x6a09e667f3bcc908ULL,
-    0xbb67ae8584caa73bULL,
-    0x3c6ef372fe94f82bULL,
-    0xa54ff53a5f1d36f1ULL,
-    0x510e527fade682d1ULL,
-    0x9b05688c2b3e6c1fULL,
-    0x1f83d9abfb41bd6bULL,
-    0x5be0cd19137e2179ULL
 }
 .fi
 .SH "Author"

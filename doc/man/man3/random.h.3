@@ -1,0 +1,53 @@
+.TH "random.h" 3 "Fri Oct 4 2019" "Version 1" "libfortuna" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+random.h
+.SH SYNOPSIS
+.br
+.PP
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSYSTEM_RESEED_MIN\fP   (20*60)         /* 20 min */"
+.br
+.ti -1c
+.RI "#define \fBSYSTEM_RESEED_CHECK_TIME\fP   (10*60)         /* 10 min */"
+.br
+.ti -1c
+.RI "#define \fBSYSTEM_RESEED_CHANCE\fP   (4) /* 256/4 * 10min ~ 10h */"
+.br
+.ti -1c
+.RI "#define \fBSYSTEM_RESEED_MAX\fP   (12*60*60)      /* 12h */"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBget_pseudo_random_bytes\fP (unsigned char *dst, unsigned count)"
+.br
+.ti -1c
+.RI "int \fBadd_entropy\fP (const unsigned char *data, unsigned count)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define SYSTEM_RESEED_CHANCE   (4) /* 256/4 * 10min ~ 10h */"
+
+.SS "#define SYSTEM_RESEED_CHECK_TIME   (10*60)         /* 10 min */"
+
+.SS "#define SYSTEM_RESEED_MAX   (12*60*60)      /* 12h */"
+
+.SS "#define SYSTEM_RESEED_MIN   (20*60)         /* 20 min */"
+
+.SH "Function Documentation"
+.PP 
+.SS "int add_entropy (const unsigned char * data, unsigned count)"
+
+.SS "int get_pseudo_random_bytes (unsigned char * dst, unsigned count)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for libfortuna from the source code\&.

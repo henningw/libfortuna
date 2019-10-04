@@ -1,14 +1,14 @@
-.TH "rijndael.c" 3 "Fri Jul 19 2013" "Version 1" "libfortuna" \" -*- nroff -*-
+.TH "rijndael.c" 3 "Fri Oct 4 2019" "Version 1" "libfortuna" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-rijndael.c \- 
+rijndael.c
 .SH SYNOPSIS
 .br
 .PP
 \fC#include <sys/param\&.h>\fP
 .br
-\fC#include 'px\&.h'\fP
+\fC#include <string\&.h>\fP
 .br
 \fC#include 'rijndael\&.h'\fP
 .br
@@ -25,16 +25,16 @@ rijndael.c \-
 .RI "#define \fBLARGE_TABLES\fP"
 .br
 .ti -1c
-.RI "#define \fBrotr\fP(x, n)   (((x) >> ((int)(n))) | ((x) << (32 - (int)(n))))"
+.RI "#define \fBrotr\fP(x,  n)   (((x) >> ((int)(n))) | ((x) << (32 \- (int)(n))))"
 .br
 .ti -1c
-.RI "#define \fBrotl\fP(x, n)   (((x) << ((int)(n))) | ((x) >> (32 - (int)(n))))"
+.RI "#define \fBrotl\fP(x,  n)   (((x) << ((int)(n))) | ((x) >> (32 \- (int)(n))))"
 .br
 .ti -1c
 .RI "#define \fBbswap\fP(x)   ((\fBrotl\fP((x), 8) & 0x00ff00ff) | (rotr((x), 8) & 0xff00ff00))"
 .br
 .ti -1c
-.RI "#define \fBbyte\fP(x, n)   ((\fBu1byte\fP)((x) >> (8 * (n))))"
+.RI "#define \fBbyte\fP(x,  n)   ((\fBu1byte\fP)((x) >> (8 * (n))))"
 .br
 .ti -1c
 .RI "#define \fBio_swap\fP(x)   (x)"
@@ -43,28 +43,28 @@ rijndael.c \-
 .RI "#define \fBtab_gen\fP   1"
 .br
 .ti -1c
-.RI "#define \fBff_mult\fP(a, b)   ((a) && (b) ? pow_tab[(log_tab[a] + log_tab[b]) % 255] : 0)"
+.RI "#define \fBff_mult\fP(a,  b)   ((a) && (b) ? pow_tab[(log_tab[a] + log_tab[b]) % 255] : 0)"
 .br
 .ti -1c
-.RI "#define \fBf_rn\fP(bo, bi, n, k)"
+.RI "#define \fBf_rn\fP(bo,  bi,  n,  k)"
 .br
 .ti -1c
-.RI "#define \fBi_rn\fP(bo, bi, n, k)"
+.RI "#define \fBi_rn\fP(bo,  bi,  n,  k)"
 .br
 .ti -1c
 .RI "#define \fBls_box\fP(x)"
 .br
 .ti -1c
-.RI "#define \fBf_rl\fP(bo, bi, n, k)"
+.RI "#define \fBf_rl\fP(bo,  bi,  n,  k)"
 .br
 .ti -1c
-.RI "#define \fBi_rl\fP(bo, bi, n, k)"
+.RI "#define \fBi_rl\fP(bo,  bi,  n,  k)"
 .br
 .ti -1c
 .RI "#define \fBstar_x\fP(x)   (((x) & 0x7f7f7f7f) << 1) ^ ((((x) & 0x80808080) >> 7) * 0x1b)"
 .br
 .ti -1c
-.RI "#define \fBimix_col\fP(y, x)"
+.RI "#define \fBimix_col\fP(y,  x)"
 .br
 .ti -1c
 .RI "#define \fBloop4\fP(i)"
@@ -76,24 +76,21 @@ rijndael.c \-
 .RI "#define \fBloop8\fP(i)"
 .br
 .ti -1c
-.RI "#define \fBf_nround\fP(bo, bi, k)"
+.RI "#define \fBf_nround\fP(bo,  bi,  k)"
 .br
 .ti -1c
-.RI "#define \fBf_lround\fP(bo, bi, k)"
+.RI "#define \fBf_lround\fP(bo,  bi,  k)"
 .br
 .ti -1c
-.RI "#define \fBi_nround\fP(bo, bi, k)"
+.RI "#define \fBi_nround\fP(bo,  bi,  k)"
 .br
 .ti -1c
-.RI "#define \fBi_lround\fP(bo, bi, k)"
+.RI "#define \fBi_lround\fP(bo,  bi,  k)"
 .br
 .in -1c
 .SS "Functions"
 
 .in +1c
-.ti -1c
-.RI "void \fBgen_tabs\fP (void)"
-.br
 .ti -1c
 .RI "\fBrijndael_ctx\fP * \fBrijndael_set_key\fP (\fBrijndael_ctx\fP *ctx, const \fBu4byte\fP *in_key, const \fBu4byte\fP key_len, int encrypt)"
 .br
@@ -104,19 +101,19 @@ rijndael.c \-
 .RI "void \fBrijndael_decrypt\fP (\fBrijndael_ctx\fP *ctx, const \fBu4byte\fP *in_blk, \fBu4byte\fP *out_blk)"
 .br
 .ti -1c
-.RI "void \fBaes_set_key\fP (\fBrijndael_ctx\fP *ctx, const \fBuint8\fP *key, unsigned keybits, int enc)"
+.RI "void \fBaes_set_key\fP (\fBrijndael_ctx\fP *ctx, const u_int8_t *key, unsigned keybits, int enc)"
 .br
 .ti -1c
-.RI "void \fBaes_ecb_encrypt\fP (\fBrijndael_ctx\fP *ctx, \fBuint8\fP *data, unsigned len)"
+.RI "void \fBaes_ecb_encrypt\fP (\fBrijndael_ctx\fP *ctx, u_int8_t *data, unsigned len)"
 .br
 .ti -1c
-.RI "void \fBaes_ecb_decrypt\fP (\fBrijndael_ctx\fP *ctx, \fBuint8\fP *data, unsigned len)"
+.RI "void \fBaes_ecb_decrypt\fP (\fBrijndael_ctx\fP *ctx, u_int8_t *data, unsigned len)"
 .br
 .ti -1c
-.RI "void \fBaes_cbc_encrypt\fP (\fBrijndael_ctx\fP *ctx, \fBuint8\fP *iva, \fBuint8\fP *data, unsigned len)"
+.RI "void \fBaes_cbc_encrypt\fP (\fBrijndael_ctx\fP *ctx, u_int8_t *iva, u_int8_t *data, unsigned len)"
 .br
 .ti -1c
-.RI "void \fBaes_cbc_decrypt\fP (\fBrijndael_ctx\fP *ctx, \fBuint8\fP *iva, \fBuint8\fP *data, unsigned len)"
+.RI "void \fBaes_cbc_decrypt\fP (\fBrijndael_ctx\fP *ctx, u_int8_t *iva, u_int8_t *data, unsigned len)"
 .br
 .in -1c
 .SH "Macro Definition Documentation"
@@ -279,9 +276,9 @@ do {   t = ls_box(rotr(t,  8)) ^ rco_tab[i];           \
 .fi
 .SS "#define PRE_CALC_TABLES"
 
-.SS "#define rotl(x, n)   (((x) << ((int)(n))) | ((x) >> (32 - (int)(n))))"
+.SS "#define rotl(x, n)   (((x) << ((int)(n))) | ((x) >> (32 \- (int)(n))))"
 
-.SS "#define rotr(x, n)   (((x) >> ((int)(n))) | ((x) << (32 - (int)(n))))"
+.SS "#define rotr(x, n)   (((x) >> ((int)(n))) | ((x) << (32 \- (int)(n))))"
 
 .SS "#define star_x(x)   (((x) & 0x7f7f7f7f) << 1) ^ ((((x) & 0x80808080) >> 7) * 0x1b)"
 
@@ -289,23 +286,21 @@ do {   t = ls_box(rotr(t,  8)) ^ rco_tab[i];           \
 
 .SH "Function Documentation"
 .PP 
-.SS "void aes_cbc_decrypt (\fBrijndael_ctx\fP *ctx, \fBuint8\fP *iva, \fBuint8\fP *data, unsignedlen)"
+.SS "void aes_cbc_decrypt (\fBrijndael_ctx\fP * ctx, u_int8_t * iva, u_int8_t * data, unsigned len)"
 
-.SS "void aes_cbc_encrypt (\fBrijndael_ctx\fP *ctx, \fBuint8\fP *iva, \fBuint8\fP *data, unsignedlen)"
+.SS "void aes_cbc_encrypt (\fBrijndael_ctx\fP * ctx, u_int8_t * iva, u_int8_t * data, unsigned len)"
 
-.SS "void aes_ecb_decrypt (\fBrijndael_ctx\fP *ctx, \fBuint8\fP *data, unsignedlen)"
+.SS "void aes_ecb_decrypt (\fBrijndael_ctx\fP * ctx, u_int8_t * data, unsigned len)"
 
-.SS "void aes_ecb_encrypt (\fBrijndael_ctx\fP *ctx, \fBuint8\fP *data, unsignedlen)"
+.SS "void aes_ecb_encrypt (\fBrijndael_ctx\fP * ctx, u_int8_t * data, unsigned len)"
 
-.SS "void aes_set_key (\fBrijndael_ctx\fP *ctx, const \fBuint8\fP *key, unsignedkeybits, intenc)"
+.SS "void aes_set_key (\fBrijndael_ctx\fP * ctx, const u_int8_t * key, unsigned keybits, int enc)"
 
-.SS "void gen_tabs (void)"
+.SS "void rijndael_decrypt (\fBrijndael_ctx\fP * ctx, const \fBu4byte\fP * in_blk, \fBu4byte\fP * out_blk)"
 
-.SS "void rijndael_decrypt (\fBrijndael_ctx\fP *ctx, const \fBu4byte\fP *in_blk, \fBu4byte\fP *out_blk)"
+.SS "void rijndael_encrypt (\fBrijndael_ctx\fP * ctx, const \fBu4byte\fP * in_blk, \fBu4byte\fP * out_blk)"
 
-.SS "void rijndael_encrypt (\fBrijndael_ctx\fP *ctx, const \fBu4byte\fP *in_blk, \fBu4byte\fP *out_blk)"
-
-.SS "\fBrijndael_ctx\fP* rijndael_set_key (\fBrijndael_ctx\fP *ctx, const \fBu4byte\fP *in_key, const \fBu4byte\fPkey_len, intencrypt)"
+.SS "\fBrijndael_ctx\fP* rijndael_set_key (\fBrijndael_ctx\fP * ctx, const \fBu4byte\fP * in_key, const \fBu4byte\fP key_len, int encrypt)"
 
 .SH "Author"
 .PP 
